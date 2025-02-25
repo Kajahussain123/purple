@@ -3,6 +3,8 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import ViewUsers from './Pages/Users/ViewUsers';
 import Sidebar from './Components/Sidebar';
 import Header from './Components/Header';
+import ViewVendors from './Pages/Vendors/ViewVendors';
+import ViewOrders from './Pages/Orders/ViewOrders';
 
 const App = () => {
   const location = useLocation(); 
@@ -17,7 +19,10 @@ const App = () => {
         {!isLoginPage && <Header />}
         <div style={mainStyle}>
           <Routes>
-            <Route path="/" element={<ViewUsers />} />
+            <Route path="/view-users" element={<ViewUsers />} />
+            <Route path="/view-vendors" element={<ViewVendors />} />
+            <Route path="/view-orders" element={<ViewOrders />} />
+
 
           </Routes>
         </div>

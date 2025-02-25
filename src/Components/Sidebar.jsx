@@ -13,9 +13,9 @@ const Sidebar = () => {
     const menuItems = [
         { text: 'Overview', icon: <DashboardIcon />, path: '/' },
         { text: 'Products', icon: <CategoryIcon />, path: '/products' },
-        { text: 'Users', icon: <PeopleIcon />, path: '/users' },
-        { text: 'Orders', icon: <ShoppingCartIcon />, path: '/orders' },
-        { text: 'Vendors', icon: <StorefrontIcon />, path: '/vendors' },
+        { text: 'Users', icon: <PeopleIcon />, path: '/view-users' },
+        { text: 'Orders', icon: <ShoppingCartIcon />, path: '/view-orders' },
+        { text: 'Vendors', icon: <StorefrontIcon />, path: '/view-vendors' },
     ];
 
     return (

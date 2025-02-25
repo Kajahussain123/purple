@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import ViewUsers from './Pages/Users/ViewUsers';
+import Sidebar from './Components/Sidebar';
+import Header from './Components/Header';
 
-function App() {
+const App = () => {
+  const location = useLocation(); 
+
+  const isLoginPage = location.pathname === '/admin-login';
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={appStyle}>
+      {/* Conditionally render Sidebar and Header */}
+      {!isLoginPage && <Sidebar />}
+      <div style={contentStyle}>
+        {!isLoginPage && <Header />}
+        <div style={mainStyle}>
+          <Routes>
+            <Route path="/" element={<ViewUsers />} />
+
+          </Routes>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+const appStyle = {
+  display: 'flex',
+  height: '100vh', 
+};
+
+const contentStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 1, 
+};
+
+const mainStyle = {
+  padding: '20px',
+  flexGrow: 1, 
+  overflowY: 'auto', 
+  backgroundColor: '#f5f5f5', 
+};
 
 export default App;

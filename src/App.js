@@ -5,6 +5,7 @@ import Sidebar from './Components/Sidebar';
 import Header from './Components/Header';
 import ViewVendors from './Pages/Vendors/ViewVendors';
 import ViewOrders from './Pages/Orders/ViewOrders';
+import VendorDetails from './Pages/Vendors/VendorDetails';
 
 const App = () => {
   const location = useLocation(); 
@@ -19,9 +20,9 @@ const App = () => {
         {!isLoginPage && <Header />}
         <div style={mainStyle}>
           <Routes>
-            <Route path="/view-users" element={<ViewUsers />} />
+           
             <Route path="/view-vendors" element={<ViewVendors />} />
-            <Route path="/view-orders" element={<ViewOrders />} />
+            <Route path="/vendor-details/:id" element={<VendorDetails />} />
 
 
           </Routes>

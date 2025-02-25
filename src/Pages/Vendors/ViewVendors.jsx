@@ -199,6 +199,7 @@ const ViewVendors = () => {
                                         <Edit />
 
                                     </IconButton>  
+
                                                                         {/* <IconButton
                                         size="small"
                                         sx={{ color: '#d32f2f', ml: 1 }}
@@ -227,7 +228,7 @@ const ViewVendors = () => {
                     <Button onClick={handleConfirmDelete} color="error">Delete</Button>
                 </DialogActions>
             </Dialog>
-
+                            {/* test */}
             {/* Edit Vendor Modal */}
             <EditVendorModal
                 open={openEditModal}

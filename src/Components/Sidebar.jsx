@@ -6,12 +6,14 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import CategoryIcon from '@mui/icons-material/Category';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import ViewCarouselIcon from '@mui/icons-material/ViewCarousel'; 
 
 const Sidebar = () => {
     const location = useLocation();
 
     const menuItems = [
         { text: 'Overview', icon: <DashboardIcon />, path: '/' },
+        { text: 'Carousel', icon: <ViewCarouselIcon />, path: '/Carousel' },
         { text: 'Products', icon: <CategoryIcon />, path: '/products' },
         { text: 'Users', icon: <PeopleIcon />, path: '/view-users' },
         { text: 'Orders', icon: <ShoppingCartIcon />, path: '/view-orders' },

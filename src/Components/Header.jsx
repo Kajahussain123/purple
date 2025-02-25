@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Badge, Avatar, Menu, MenuItem, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import MailIcon from '@mui/icons-material/Mail';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useNavigate } from 'react-router-dom';
 

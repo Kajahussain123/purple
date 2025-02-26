@@ -1,4 +1,3 @@
-// src/pages/users/EditUserWithAddressModal.js
 import React, { useEffect, useState } from 'react';
 import {
   Dialog,
@@ -12,7 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import { getUserById, updateUser } from './UserService';
-import { updateAddress } from './AddressService';
+import { updateAddress, createAddress } from './AddressService';
 
 const EditUserWithAddressModal = ({ open, handleClose, userId, refreshUsers }) => {
   const [user, setUser] = useState(null);
@@ -29,7 +28,7 @@ const EditUserWithAddressModal = ({ open, handleClose, userId, refreshUsers }) =
     }
   }, [userId, open]);
 
-  // Handlers for user field changes
+  // Handlers for user field changes.
   const handleUserChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -38,7 +37,7 @@ const EditUserWithAddressModal = ({ open, handleClose, userId, refreshUsers }) =
     setUser({ ...user, [e.target.name]: e.target.checked });
   };
 
-  // Handlers for address field changes
+  // Handlers for address field changes.
   const handleAddressChange = (index, e) => {
     const updatedAddresses = user.addresses.map((addr, i) =>
       i === index ? { ...addr, [e.target.name]: e.target.value } : addr
@@ -53,10 +52,25 @@ const EditUserWithAddressModal = ({ open, handleClose, userId, refreshUsers }) =
     setUser({ ...user, addresses: updatedAddresses });
   };
 
+  // Add a new blank address.
+  const handleAddAddress = () => {
+    const newAddress = {
+      // These fields are default empty values.
+      address_line1: "",
+      address_line2: "",
+      city: "",
+      state: "",
+      country: "",
+      pincode: "",
+      is_primary: false,
+    };
+    setUser({ ...user, addresses: [...(user.addresses || []), newAddress] });
+  };
+
   // Save both user info and addresses.
   const handleSave = async () => {
     try {
-      // Update user basic information.
+      // console.log("Starting user update...");
       await updateUser(userId, {
         username: user.username,
         email: user.email,
@@ -64,18 +78,29 @@ const EditUserWithAddressModal = ({ open, handleClose, userId, refreshUsers }) =
         is_active: user.is_active,
         is_staff: user.is_staff,
       });
-      // Update each address individually.
+      // console.log("User update complete.");
+  
       if (user.addresses && user.addresses.length > 0) {
         for (const addr of user.addresses) {
-          await updateAddress(addr.id, addr);
+          if (addr.id) {
+            console.log("Updating address with id:", addr.id);
+            await updateAddress(addr.id, addr);
+            console.log("Address", addr.id, "updated.");
+          } else {
+            console.log("Creating new address for user:", userId);
+            await createAddress({ ...addr, user: userId });
+            console.log("New address created.");
+          }
         }
       }
       refreshUsers();
       handleClose();
+      console.log("Save changes complete.");
     } catch (error) {
       console.error("Error saving changes:", error);
     }
   };
+  
 
   if (!open) return null;
 
@@ -143,10 +168,12 @@ const EditUserWithAddressModal = ({ open, handleClose, userId, refreshUsers }) =
             {user.addresses && user.addresses.length > 0 ? (
               user.addresses.map((addr, index) => (
                 <Box
-                  key={addr.id}
+                  key={addr.id || index} // use index as key for new addresses without id
                   sx={{ border: '1px solid #ccc', p: 2, mb: 2 }}
                 >
-                  <Typography variant="subtitle1">Address ID: {addr.id}</Typography>
+                  <Typography variant="subtitle1">
+                    {addr.id ? `Address ID: ${addr.id}` : "New Address"}
+                  </Typography>
                   <TextField
                     fullWidth
                     label="Address Line 1"
@@ -210,6 +237,11 @@ const EditUserWithAddressModal = ({ open, handleClose, userId, refreshUsers }) =
             ) : (
               <Typography>No addresses available.</Typography>
             )}
+            {/* Button to add a new address */}
+            <Button variant="outlined" onClick={handleAddAddress}>
+              Add Address
+            </Button>
+
             <Button onClick={handleSave} variant="contained" color="primary" sx={{ mt: 2 }}>
               Save Changes
             </Button>
